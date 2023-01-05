@@ -1,5 +1,6 @@
 package q1_two_sums
 
+// leetcode #1
 func twoSums(nums []int, target int) []int {
 	m := make(map[int]int)
 	for i, num := range nums {
