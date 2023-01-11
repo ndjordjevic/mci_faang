@@ -8,8 +8,7 @@ package q1_two_sums
 //     No they may not be always a solution, return nil
 //     You may assume that each input would have exactly one solution, and you may not use the same element twice.
 //  2. Write test-cases (use unit-tests)
-//  3. Figure out solution without code
-//     numberToFind = target - nums[p1]
+//  3. Figure out solution without code, write logical steps
 //  4. Write brute force solution
 //  5. Double-check for errors
 //     Check for typos, closing our loops etc...
@@ -19,10 +18,17 @@ package q1_two_sums
 
 // Brute force: nested loops
 //
-//	nums = [1, 3, 7, 9, 2], target = 11
-//	nums = [1, 3, 7, 9, 2], target = 25
-//	nums = [], target = 11
-//	nums = [1], target = 11
+//	iterate over array (p1=0)
+//	calc numberToFind := target - nums[p1]
+//	iterate over array (p2=p1+1)
+//	if numberToFind == nums[p2]
+//		yes: return [p1, p2]
+//		no: continue
+//
+// nums = [1, 3, 7, 9, 2], target = 11
+// nums = [1, 3, 7, 9, 2], target = 25
+// nums = [], target = 11
+// nums = [1], target = 11
 func twoSumsBruteForce(nums []int, target int) []int { // Time: O(n^2), Space: O(1)
 	for p1 := 0; p1 < len(nums); p1++ { // p1 = 0
 		numberToFind := target - nums[p1]        // numberToFind = 0
@@ -40,7 +46,7 @@ func twoSumsBruteForce(nums []int, target int) []int { // Time: O(n^2), Space: O
 //	     iterate over an array (p as a pointer)
 //			check if there is a [target-num] item in a map
 //				yes: return idx, p
-//				no:  store in a map: num as a key, p as a value (numsMap[num] = p)
+//				no:  store in a map: num as a key, p as a value (numsMap[num] = p), continue looping
 //
 //		nums = [1, 3, 7, 9, 2], target = 11
 //		nums = [1, 3, 7, 9, 2], target = 25
