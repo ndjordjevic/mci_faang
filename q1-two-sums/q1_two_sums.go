@@ -2,19 +2,20 @@ package q1_two_sums
 
 // leetcode #1
 // Given an array of integers, return indices of the two numbers such that they add up to a specific target.
-//  1. Verify the constraints:
+//  1. Write and understand the problem and verify the constraints:
 //     All nums positive
 //     No duplicates in the array
 //     No they may not be always a solution, return nil
 //     You may assume that each input would have exactly one solution, and you may not use the same element twice.
-//  2. Write test-cases (use unit-tests)
+//  2. Write func signature and test-cases (use unit-tests)
 //  3. Figure out solution without code, write logical steps
+//		once it's found return
 //  4. Write brute force solution
 //  5. Double-check for errors
 //     Check for typos, closing our loops etc...
 //  6. Test with test cases manually walking through the code execution. Test edge cases too!
 //  7. Time and space complexity
-//  8. Optimize solution
+//  8. Optimize solution and repeat testing and calc time and space capacity
 
 // Brute force: nested loops
 //
