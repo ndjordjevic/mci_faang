@@ -1,7 +1,9 @@
 package q1_two_sums
 
 // leetcode #1
+
 // Given an array of integers, return indices of the two numbers such that they add up to a specific target.
+//
 //  1. Write and understand the problem and verify the constraints:
 //     All nums positive
 //     No duplicates in the array

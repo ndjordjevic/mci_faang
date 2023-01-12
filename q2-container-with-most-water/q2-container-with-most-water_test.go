@@ -39,6 +39,13 @@ func Test_maxWaterContainerBruteForce(t *testing.T) {
 			},
 			want: 32,
 		},
+		{
+			name: "Should return another 32",
+			args: args{
+				[]int{4, 8, 1, 2, 3, 9},
+			},
+			want: 32,
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -59,7 +66,7 @@ func Test_maxWaterContainer(t *testing.T) {
 		want int
 	}{
 		{
-			name: "Should return correct result of 28",
+			name: "Should return 28",
 			args: args{
 				[]int{7, 1, 2, 3, 9},
 			},
@@ -80,9 +87,16 @@ func Test_maxWaterContainer(t *testing.T) {
 			want: 0,
 		},
 		{
-			name: "Should return correct result of 32",
+			name: "Should return 32",
 			args: args{
 				[]int{6, 9, 3, 4, 5, 8},
+			},
+			want: 32,
+		},
+		{
+			name: "Should return another 32",
+			args: args{
+				[]int{4, 8, 1, 2, 3, 9},
 			},
 			want: 32,
 		},
