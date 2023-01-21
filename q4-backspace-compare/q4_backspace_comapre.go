@@ -45,12 +45,11 @@ func backspaceCompareBruteForce(s, t string) bool { // Time: O(n+m), Space: O(n+
 }
 
 // Two pointers, each one on each string, starting from the last char in both strings
-// while till p1 >= 0 || p2 >= 0
-// check if chars at p1 or p2 are #
-// yes: backCount=2, while backCount > 0, decrement p1 or p2 and backCount, if next char is also # backCount += 2
-// no: if chars at p1 and p2 are not the same return false, if they are the same decrement p1 and p2
-// return true
-//
+// while p1 >= 0 || p2 >= 0
+// If the current char at p1 or p2 is # backspace till find the char to compare
+// If p1 and p2 are > 0 and chars don't match return false
+// If one of the p1 or p2 is -1 and the other is not return false
+// If no false return is reached return true at the end
 // S:"ab#z" T:"az#z" true
 // S:"x#y#z#" T:"a#" true
 // S:"a###b" T:"b" true
@@ -61,12 +60,12 @@ func backspaceCompare(s, t string) bool { // Time: O(n+m), Space: O(1)
 	for p1 >= 0 || p2 >= 0 {
 		if p1 >= 0 && s[p1] == '#' {
 			// clean s #
-			p1 = cleanBS(s, p1)
+			p1 = backspace(s, p1)
 		}
 
 		if p2 >= 0 && t[p2] == '#' {
 			// clean t #
-			p2 = cleanBS(t, p2)
+			p2 = backspace(t, p2)
 		}
 
 		if p1 >= 0 && p2 >= 0 && s[p1] != t[p2] {
@@ -85,7 +84,7 @@ func backspaceCompare(s, t string) bool { // Time: O(n+m), Space: O(1)
 }
 
 // s="ab#z" p=3
-func cleanBS(s string, p int) int {
+func backspace(s string, p int) int {
 	bc := 2
 	for p >= 0 && bc > 0 {
 		p--
