@@ -1,4 +1,4 @@
-package q4_typed_out_strings
+package q4_backspace_compare
 
 import "testing"
 
