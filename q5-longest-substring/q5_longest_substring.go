@@ -40,3 +40,38 @@ func longestSubstringBruteForce(s string) int { // Time: O(n^2), Space: O(n)
 
 	return longest
 }
+
+// Sliding window with two pointers
+// still have a map, key: char, value: index
+// initialize left and largest to 0
+// iterate right from 0 to len
+// check if current char at right exist in a map, and it's index is >=:
+// yes: update left to be one more than the right (move it forward to be one in front of the right)
+// update a map, key char at right, value current index
+// if right - left + 1 > longest that's a new longest
+//
+// "abccabb", 3
+func longestSubstring(s string) int { // Time:O(n), Space: O(n)
+	if len(s) <= 1 {
+		return len(s)
+	}
+
+	seenChars := make(map[uint8]int) // a:4, b:6, c:3
+	left := 0                        // 6
+	longest := 0                     // 3
+
+	for right := 0; right < len(s); right++ { // 6
+		currentChar := s[right]                          // 'b'
+		previouslySeenChar, ok := seenChars[currentChar] // previouslySeenChar=5
+		if ok && previouslySeenChar >= left {
+			left = previouslySeenChar + 1
+		}
+
+		seenChars[currentChar] = right
+		if (right - left + 1) > longest {
+			longest = right - left + 1
+		}
+	}
+
+	return longest
+}
