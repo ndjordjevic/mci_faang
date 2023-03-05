@@ -8,9 +8,9 @@ package q7_reverse_linked_list
 // 3->nil: 3->nil
 // nil: nil
 
-type node struct {
-	value int
-	next  *node
+type ListNode struct {
+	Val  int
+	Next *ListNode
 }
 
 // Two vars prev & current and one local inside while loop called next
@@ -23,13 +23,13 @@ type node struct {
 // current = next
 // end of while
 // return prev
-func reverseLinkedList(head *node) *node { // head: 1->2->3->4->5->nil Space: O(1), Time: O(n)
-	var prev *node  // prev: 5->4->3->2->1->nil
-	current := head // current: nil
+func reverseLinkedList(head *ListNode) *ListNode { // head: 1->2->3->4->5->nil Space: O(1), Time: O(n)
+	var prev *ListNode // prev: 5->4->3->2->1->nil
+	current := head    // current: nil
 
 	for current != nil {
-		next := current.next // next: nil
-		current.next = prev
+		next := current.Next // next: nil
+		current.Next = prev
 		prev = current
 		current = next
 	}

@@ -7,44 +7,44 @@ import (
 
 func TestReverseLinkedList(t *testing.T) {
 	type args struct {
-		head *node
+		head *ListNode
 	}
 	tests := []struct {
 		name string
 		args args
-		want *node
+		want *ListNode
 	}{
 		{
 			name: "Should reverse",
 			args: args{
-				&node{
-					value: 1,
-					next: &node{
-						value: 2,
-						next: &node{
-							value: 3,
-							next: &node{
-								value: 4,
-								next: &node{
-									value: 5,
-									next:  nil,
+				&ListNode{
+					Val: 1,
+					Next: &ListNode{
+						Val: 2,
+						Next: &ListNode{
+							Val: 3,
+							Next: &ListNode{
+								Val: 4,
+								Next: &ListNode{
+									Val:  5,
+									Next: nil,
 								},
 							},
 						},
 					},
 				},
 			},
-			want: &node{
-				value: 5,
-				next: &node{
-					value: 4,
-					next: &node{
-						value: 3,
-						next: &node{
-							value: 2,
-							next: &node{
-								value: 1,
-								next:  nil,
+			want: &ListNode{
+				Val: 5,
+				Next: &ListNode{
+					Val: 4,
+					Next: &ListNode{
+						Val: 3,
+						Next: &ListNode{
+							Val: 2,
+							Next: &ListNode{
+								Val:  1,
+								Next: nil,
 							},
 						},
 					},
@@ -54,9 +54,9 @@ func TestReverseLinkedList(t *testing.T) {
 		{
 			name: "Only one element",
 			args: args{
-				&node{3, nil},
+				&ListNode{3, nil},
 			},
-			want: &node{3, nil},
+			want: &ListNode{3, nil},
 		},
 		{
 			name: "nil linkedliost",
