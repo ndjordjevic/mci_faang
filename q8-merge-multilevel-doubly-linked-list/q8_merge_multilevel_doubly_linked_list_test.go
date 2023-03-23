@@ -88,8 +88,16 @@ func Test_flatten(t *testing.T) {
 }
 
 func compareLL(head1, head2 *Node) bool {
-	for head1 != nil {
-		if head1.Val != head2.Val {
+	if head1 == nil && head2 == nil {
+		return true
+	}
+
+	if head1 == nil && head2 != nil || head1 != nil && head2 == nil {
+		return false
+	}
+
+	for head1 != nil || head2 != nil {
+		if head1 == nil && head2 != nil || head1 != nil && head2 == nil || head1.Val != head2.Val {
 			return false
 		}
 
