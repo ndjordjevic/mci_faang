@@ -27,3 +27,40 @@ func detectCycleBruteForce(head *ListNode) *ListNode { // Time: O(n), Space: O(n
 
 	return curr
 }
+
+// Uses Floyd's Tortoise and Hare algorithm with two pointers, Tortoise moves one node at the time, Hare moves two nodes
+// We instantiate both pointers and set to the head
+// Then infinite loop until we break either when we found they are met, or Hare is nil or points to nil
+// If they meet we have a cycle
+// then we have to find at what node they are met
+// instantiate two pointers, p1 and p2, one points to the head, the other points to the either Tortoise or Hare
+// and move them one step at a time until they meet and that would be the node the cycle has started
+func detectCycleFloydTortoiseHair(head *ListNode) *ListNode { // Time: O(n), Space: O(1)
+	if head == nil {
+		return nil
+	}
+
+	tortoise, hare := head, head
+
+	for {
+		hare = hare.Next
+		tortoise = tortoise.Next
+
+		if hare == nil || hare.Next == nil {
+			return nil
+		}
+		hare = hare.Next
+
+		if tortoise == hare {
+			break
+		}
+	}
+
+	p1, p2 := head, tortoise
+	for p1 != p2 {
+		p1 = p1.Next
+		p2 = p2.Next
+	}
+
+	return p1
+}

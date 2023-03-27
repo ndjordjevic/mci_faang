@@ -78,3 +78,21 @@ func Test_detectCycleBruteForce_cycleNotExists(t *testing.T) {
 		t.Errorf("detectCycleBruteForce() = %v, want %v", got, want)
 	}
 }
+
+func Test_detectCycleFloydTortoiseHair_cycleExists(t *testing.T) {
+	cll := CycledLL{}
+	cll.Insert(1, false)
+	cll.Insert(2, false)
+	cll.Insert(3, true)
+	cll.Insert(4, false)
+	cll.Insert(5, false)
+	cll.Insert(6, false)
+	cll.Insert(7, false)
+	cll.InsertToCycle(8)
+
+	want := cll.cn
+
+	if got := detectCycleFloydTortoiseHair(cll.head); !reflect.DeepEqual(got, want) {
+		t.Errorf("detectCycleBruteForce() = %v, want %v", got, want)
+	}
+}
