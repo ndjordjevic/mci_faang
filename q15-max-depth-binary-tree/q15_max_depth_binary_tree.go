@@ -23,7 +23,7 @@ func maxDepthRecursive(node *TreeNode, currentDepth int) int {
 		}
 		return b
 	}
-	return max(maxDepthRecursive(node.leftNode, currentDepth), maxDepthRecursive(node.rightNode, currentDepth))
+	return max(maxDepthRecursive(node.Left, currentDepth), maxDepthRecursive(node.Right, currentDepth))
 }
 
 type BinarySearchTree struct {
@@ -31,7 +31,7 @@ type BinarySearchTree struct {
 }
 
 func (tree *BinarySearchTree) insertElement(value int) {
-	newNode := &TreeNode{value: value}
+	newNode := &TreeNode{Val: value}
 	if tree.rootNode == nil {
 		tree.rootNode = newNode
 	} else {
@@ -40,19 +40,19 @@ func (tree *BinarySearchTree) insertElement(value int) {
 }
 
 func insertNodeBST(parentNode *TreeNode, newNode *TreeNode) {
-	if newNode.value < parentNode.value {
-		if parentNode.leftNode == nil {
-			parentNode.leftNode = newNode
+	if newNode.Val < parentNode.Val {
+		if parentNode.Left == nil {
+			parentNode.Left = newNode
 		} else {
-			insertNodeBST(parentNode.leftNode, newNode)
+			insertNodeBST(parentNode.Left, newNode)
 		}
 	}
 
-	if newNode.value > parentNode.value {
-		if parentNode.rightNode == nil {
-			parentNode.rightNode = newNode
+	if newNode.Val > parentNode.Val {
+		if parentNode.Right == nil {
+			parentNode.Right = newNode
 		} else {
-			insertNodeBST(parentNode.rightNode, newNode)
+			insertNodeBST(parentNode.Right, newNode)
 		}
 	}
 }
@@ -65,12 +65,12 @@ func (tree *BinarySearchTree) breathFirstSearch() []int {
 	queue = append(queue, currentNode)
 	for len(queue) > 0 {
 		currentNode, queue = queue[0], queue[1:]
-		list = append(list, currentNode.value)
-		if currentNode.leftNode != nil {
-			queue = append(queue, currentNode.leftNode)
+		list = append(list, currentNode.Val)
+		if currentNode.Left != nil {
+			queue = append(queue, currentNode.Left)
 		}
-		if currentNode.rightNode != nil {
-			queue = append(queue, currentNode.rightNode)
+		if currentNode.Right != nil {
+			queue = append(queue, currentNode.Right)
 		}
 	}
 
@@ -91,123 +91,38 @@ func (tree *BinarySearchTree) depthFirstSearchPostOrder() []int {
 }
 
 func traversePreOrder(node *TreeNode, list []int) []int {
-	list = append(list, node.value)
-	if node.leftNode != nil {
-		list = traversePreOrder(node.leftNode, list)
+	list = append(list, node.Val)
+	if node.Left != nil {
+		list = traversePreOrder(node.Left, list)
 	}
-	if node.rightNode != nil {
-		list = traversePreOrder(node.rightNode, list)
+	if node.Right != nil {
+		list = traversePreOrder(node.Right, list)
 	}
 	return list
 }
 func traverseInOrder(node *TreeNode, list []int) []int {
-	if node.leftNode != nil {
-		list = traverseInOrder(node.leftNode, list)
+	if node.Left != nil {
+		list = traverseInOrder(node.Left, list)
 	}
-	list = append(list, node.value)
-	if node.rightNode != nil {
-		list = traverseInOrder(node.rightNode, list)
+	list = append(list, node.Val)
+	if node.Right != nil {
+		list = traverseInOrder(node.Right, list)
 	}
 	return list
 }
 func traversePostOrder(node *TreeNode, list []int) []int {
-	if node.leftNode != nil {
-		list = traversePostOrder(node.leftNode, list)
+	if node.Left != nil {
+		list = traversePostOrder(node.Left, list)
 	}
-	if node.rightNode != nil {
-		list = traversePostOrder(node.rightNode, list)
+	if node.Right != nil {
+		list = traversePostOrder(node.Right, list)
 	}
-	list = append(list, node.value)
+	list = append(list, node.Val)
 	return list
 }
 
 type TreeNode struct {
-	value     int
-	leftNode  *TreeNode
-	rightNode *TreeNode
-}
-
-// {1, 2, 3, 4, nil, nil, 5, 6, nil, nil, nil, nil, nil, nil, 7}
-// DOESN'T WORK AS EXPECTED
-func (n *TreeNode) createBTFromList(values []*int) {
-	*n = TreeNode{
-		value: *values[0],
-	}
-	queue := []*TreeNode{n}
-	i := 1
-	for len(queue) > 0 {
-		current := queue[0]
-		queue = queue[1:]
-		// left
-		if current.leftNode == nil {
-			if values[i] != nil {
-				current.leftNode = &TreeNode{value: *values[i]}
-			}
-			i++
-			if i >= len(values) {
-				return
-			}
-		}
-		if current.leftNode != nil {
-			queue = append(queue, current.leftNode)
-		}
-
-		// right
-		if current.rightNode == nil {
-			if values[i] != nil {
-				current.rightNode = &TreeNode{value: *values[i]}
-			}
-			i++
-			if i >= len(values) {
-				return
-			}
-		}
-		if current.rightNode != nil {
-			queue = append(queue, current.rightNode)
-		}
-	}
-}
-
-// {1, 2, 3, 4, nil, nil, 5, 6, nil, nil, nil, nil, nil, nil, 7}
-// DOESN'T WORK AS EXPECTED
-func (n *TreeNode) createBTFromList2(array []*int) {
-	if array == nil || len(array) == 0 {
-		return
-	}
-	var tnq []*TreeNode
-	var iq []*int
-
-	*n = TreeNode{
-		value: *array[0],
-	}
-	tnq = append(tnq, n)
-
-	for i := 1; i < len(array); i++ {
-		iq = append(iq, array[i])
-	}
-
-	for len(iq) > 0 {
-		var lv, rv *int
-		if len(iq) > 0 {
-			lv = iq[0]
-			iq = iq[1:]
-		}
-		if len(iq) > 0 {
-			rv = iq[0]
-			iq = iq[1:]
-		}
-		current := tnq[0]
-		tnq = tnq[1:]
-
-		if lv != nil {
-			l := &TreeNode{value: *lv}
-			current.leftNode = l
-			tnq = append(tnq, l)
-		}
-		if rv != nil {
-			r := &TreeNode{value: *rv}
-			current.rightNode = r
-			tnq = append(tnq, r)
-		}
-	}
+	Val   int
+	Left  *TreeNode
+	Right *TreeNode
 }

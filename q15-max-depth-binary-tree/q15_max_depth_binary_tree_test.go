@@ -1,7 +1,6 @@
 package q15_max_depth_binary_tree
 
 import (
-	"fmt"
 	"reflect"
 	"testing"
 )
@@ -78,30 +77,89 @@ func TestDepthFirstSearchPostOrder(t *testing.T) {
 	}
 }
 
-func TestTreeNode_createBTFromList(t *testing.T) {
-	intPt := func(i int) *int {
-		pt := new(int)
-		*pt = i
-		return pt
+func treeFromArrayBFS(values []int) *TreeNode {
+	if len(values) == 0 {
+		return nil
 	}
 
-	root := new(TreeNode)
-	values := []*int{intPt(1), intPt(2), intPt(3), intPt(4), nil, nil, intPt(5), intPt(6), nil, nil, nil, nil, nil, nil, intPt(7)}
+	root := &TreeNode{Val: values[0]}
+	values = values[1:]
+	queue := []*TreeNode{root}
+	var i int
 
-	root.createBTFromList(values)
-	fmt.Println(root)
+	for len(queue) > 0 {
+		current := queue[0]
+		queue = queue[1:]
+
+		if current.Left == nil {
+			if values[i] != -1 {
+				current.Left = &TreeNode{Val: values[i]}
+			}
+			i++
+			if i >= len(values) {
+				return root
+			}
+		}
+		if current.Left != nil {
+			queue = append(queue, current.Left)
+		}
+
+		if current.Right == nil {
+			if values[i] != -1 {
+				current.Right = &TreeNode{Val: values[i]}
+			}
+			i++
+			if i >= len(values) {
+				return root
+			}
+		}
+		if current.Right != nil {
+			queue = append(queue, current.Right)
+		}
+	}
+
+	return root
 }
 
-func TestTreeNode_createBTFromList2(t *testing.T) {
-	intPt := func(i int) *int {
-		pt := new(int)
-		*pt = i
-		return pt
+func arrayFromTreeBFS(root *TreeNode) []int {
+	if root == nil {
+		return []int{}
 	}
 
-	root := new(TreeNode)
-	values := []*int{intPt(1), intPt(2), intPt(3), intPt(4), nil, nil, intPt(5), intPt(6), nil, nil, nil, nil, nil, nil, intPt(7)}
+	currentNode := root
+	var list []int
+	var queue []*TreeNode
 
-	root.createBTFromList2(values)
-	fmt.Println(root)
+	queue = append(queue, currentNode)
+	for len(queue) > 0 {
+		currentNode, queue = queue[0], queue[1:]
+		if currentNode == nil {
+			list = append(list, -1)
+			continue
+		}
+		list = append(list, currentNode.Val)
+		if currentNode.Left != nil {
+			queue = append(queue, currentNode.Left)
+		} else {
+			queue = append(queue, nil)
+		}
+		if currentNode.Right != nil {
+			queue = append(queue, currentNode.Right)
+		} else {
+			queue = append(queue, nil)
+		}
+	}
+
+	return list
+}
+
+func Test_maxDepth(t *testing.T) {
+	array := []int{3, 9, 20, -1, -1, 15, 7}
+
+	root := treeFromArrayBFS(array)
+	want := 3
+
+	if got := maxDepth(root); got != want {
+		t.Errorf("maxDepth() = %v, want %v", got, want)
+	}
 }
