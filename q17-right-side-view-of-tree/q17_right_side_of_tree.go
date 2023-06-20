@@ -18,7 +18,7 @@ package q17_right_side_view_of_tree
 //   - Increment the count
 //
 // Add the currentNode to the result array
-func rightSideViewBFS(root *TreeNode) []int {
+func rightSideViewBFS(root *TreeNode) []int { // Time: O(n), Space: O(n)
 	if root == nil {
 		return []int{}
 	}
@@ -43,6 +43,36 @@ func rightSideViewBFS(root *TreeNode) []int {
 	}
 
 	return result
+}
+
+// We are going to use DFS to solve this problem with NRL (Node Right Left) Pre-Order approach
+// Define result array
+// Call the recursive function with root node, currentDepth = 0 and result array
+// Return the result array
+func rightSideViewDFS(root *TreeNode) []int { // Time: O(n), Space: O(n)
+	var result []int
+	rightSideViewDFSRecursive(root, 0, &result)
+	return result
+}
+
+// Define the recursive function with node, currentDepth and result array
+// If node is nil return
+// If currentDepth >= len(result) then append the node value to the result array (this means we are at the right side of the tree)
+// Increment the currentDepth
+// Call the recursive function with node.Right, currentDepth and result array
+// Call the recursive function with node.Left, currentDepth and result array
+func rightSideViewDFSRecursive(node *TreeNode, currentDepth int, result *[]int) {
+	if node == nil {
+		return
+	}
+
+	if currentDepth >= len(*result) {
+		*result = append(*result, node.Val)
+	}
+
+	currentDepth++
+	rightSideViewDFSRecursive(node.Right, currentDepth, result)
+	rightSideViewDFSRecursive(node.Left, currentDepth, result)
 }
 
 type TreeNode struct {
@@ -112,16 +142,8 @@ func arrayFromTreeBFS(root *TreeNode) []int {
 			continue
 		}
 		list = append(list, currentNode.Val)
-		if currentNode.Left != nil {
-			queue = append(queue, currentNode.Left)
-		} else {
-			queue = append(queue, nil)
-		}
-		if currentNode.Right != nil {
-			queue = append(queue, currentNode.Right)
-		} else {
-			queue = append(queue, nil)
-		}
+		queue = append(queue, currentNode.Left)
+		queue = append(queue, currentNode.Right)
 	}
 
 	return list

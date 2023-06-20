@@ -15,6 +15,15 @@ func Test_rightSideViewBFS(t *testing.T) {
 	}
 }
 
+func Test_rightSideViewDFS(t *testing.T) {
+	tree := treeFromArrayBFS([]int{1, 2, 3, 4, 5, -1, 6, -1, 7, -1, -1, -1, -1, 8, -1, -1, -1})
+	want := []int{1, 3, 6, 7, 8}
+
+	if got := rightSideViewDFS(tree); !reflect.DeepEqual(got, want) {
+		t.Errorf("rightSideViewDFS() = %v, want %v", got, want)
+	}
+}
+
 func Test_treeFromArrayBFS_ArrayFromTreeBFS(t *testing.T) {
 	inputArray := []int{1, 2, 3, 4, 5, -1, 6, -1, 7, -1, -1, -1, -1, 8, -1, -1, -1}
 
